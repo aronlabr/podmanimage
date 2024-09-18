@@ -14,8 +14,7 @@ RUN mkdir -p ${FNM_DIR} \
     && fnm install $NODE_VERSION \
     && fnm alias default $NODE_VERSION
 
-RUN dnf remove -y curl unzip \
-    && dnf autoremove -y \
+RUN dnf autoremove -y \
     && dnf clean all \
     && rm -rf /tmp/* /var/cache/dnf/* /tmp/common-setup.sh /tmp/node-setup.sh
 
