@@ -1,29 +1,28 @@
 FROM docker.io/library/fedora:40
 
-RUN dnf check-update \
-    && dnf upgrade -y \
-    && dnf install -y bash curl git @development-tools inotify-tools unzip
+RUN dnf upgrade -y \
+    && dnf install -y bash curl git inotify-tools unzip
 
 # NodeJS
 ARG FNM_DIR=/opt/fnm
 ARG FNM_INTERACTIVE_CLI=false
 ENV PATH=${FNM_DIR}:${PATH}
 RUN mkdir -p ${FNM_DIR} \
-  && curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir $FNM_DIR --skip-shell \
-  && ln -s $FNM_DIR/fnm /usr/bin/ && chmod +x /usr/bin/fnm \
-  && fnm install $NODE_VERSION \
-  && fnm alias default $NODE_VERSION
+    && curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir $FNM_DIR --skip-shell \
+    && ln -s $FNM_DIR/fnm /usr/bin/ && chmod +x /usr/bin/fnm \
+    && fnm install $NODE_VERSION \
+    && fnm alias default $NODE_VERSION
 
-RUN apt-get remove -y curl unzip \
-  && apt-get autoremove -y \
-  && apt-get clean -y \
-  && rm -rf /tmp/* /var/lib/apt/lists/* /tmp/common-setup.sh /tmp/node-setup.sh
+RUN dnf remove -y curl unzip \
+    && dnf autoremove -y \
+    && dnf clean all \
+    && rm -rf /tmp/* /var/cache/dnf/* /tmp/common-setup.sh /tmp/node-setup.sh
 
 RUN curl -fsSL https://get.pnpm.io/install.sh | sh -
 ENV PATH="/root/.local/share/pnpm:$PATH"
 RUN pnpm --version
 
-ENV APP_HOME /app
+ENV APP_HOME=/app
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
