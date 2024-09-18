@@ -19,8 +19,8 @@ RUN apk --no-cache upgrade \
 
 RUN rm -rf /tmp/* /var/cache/apk/* /tmp/common-setup.sh /tmp/node-setup.sh
 
-RUN export SHELL=$(which sh) \
-    && curl -fsSL https://get.pnpm.io/install.sh | sh -
+RUN wget -qO /bin/pnpm "https://github.com/pnpm/pnpm/releases/latest/download/pnpm-linuxstatic-x64" \
+    && chmod +x /bin/pnpm
 ENV PATH="/root/.local/share/pnpm:$PATH"
 RUN pnpm --version
 
