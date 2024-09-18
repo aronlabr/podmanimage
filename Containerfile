@@ -4,6 +4,7 @@ RUN dnf upgrade -y \
     && dnf install -y bash curl git inotify-tools unzip
 
 # NodeJS
+ARG NODE_VERSION=22
 ARG FNM_DIR=/opt/fnm
 ARG FNM_INTERACTIVE_CLI=false
 ENV PATH=${FNM_DIR}:${PATH}
