@@ -12,7 +12,9 @@ RUN mkdir -p ${FNM_DIR} \
     && curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir $FNM_DIR --skip-shell \
     && ln -s $FNM_DIR/fnm /usr/bin/ && chmod +x /usr/bin/fnm \
     && fnm install $NODE_VERSION \
-    && fnm alias default $NODE_VERSION
+    && fnm alias default $NODE_VERSION \
+    && fnm use default \
+    && node --version
 
 RUN dnf autoremove -y \
     && dnf clean all \
