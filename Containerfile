@@ -11,6 +11,7 @@ ENV PATH=${FNM_DIR}:${PATH}
 RUN mkdir -p ${FNM_DIR} \
     && curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir $FNM_DIR --skip-shell \
     && ln -s $FNM_DIR/fnm /usr/bin/ && chmod +x /usr/bin/fnm \
+    && eval(`fnm env`) \
     && fnm install $NODE_VERSION \
     && fnm alias default $NODE_VERSION \
     && fnm use default \
